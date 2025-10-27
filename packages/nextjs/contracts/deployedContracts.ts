@@ -4,6 +4,22 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
-
+const deployedContracts = {
+  4202: {
+    // Lisk Sepolia Chain ID
+    MyToken: {
+      address: "0x73D13B9806039997d134Fa078f60EbE3aA148fd3",
+      abi: [
+        // Copy ABI dari contracts/MyToken.sol atau dari blockscout
+        // Atau kita bisa generate dari contract files
+      ],
+    },
+    MyNFT: {
+      address: "0xb2Ba29F19E9bfd34f43d21c8d0440AC91f7CA6b5",
+      abi: [
+        // Copy ABI dari contracts/MyNFT.sol atau dari blockscout
+      ],
+    },
+  },
+};
 export default deployedContracts satisfies GenericContractsDeclaration;

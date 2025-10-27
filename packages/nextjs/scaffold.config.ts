@@ -1,5 +1,31 @@
-import { liskSepolia } from "./chains";
 import * as chains from "viem/chains";
+
+// Define Lisk Sepolia custom chain
+const liskSepolia = {
+  id: 4202,
+  name: "Lisk Sepolia",
+  network: "lisk-sepolia",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Sepolia Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.sepolia-api.lisk.com"],
+    },
+    public: {
+      http: ["https://rpc.sepolia-api.lisk.com"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://sepolia-blockscout.lisk.com",
+    },
+  },
+  testnet: true,
+} as const satisfies chains.Chain;
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
@@ -12,7 +38,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat, liskSepolia],
+  targetNetworks: [liskSepolia],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
