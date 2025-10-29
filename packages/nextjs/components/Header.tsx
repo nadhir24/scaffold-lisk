@@ -71,10 +71,11 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+ useOutsideClick(
+  burgerMenuRef as React.RefObject<HTMLElement>,
+  useCallback(() => setIsDrawerOpen(false), []),
+);
+
 
   return (
     <header className="sticky lg:static top-0 navbar bg-base-900 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2 border-b border-[#252442]">
