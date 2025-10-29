@@ -1,27 +1,20 @@
-import { defineChain } from "viem";
+// Create a helper to convert the chain
+import { defineChain } from "thirdweb";
 
-export const liskSepolia = /*#__PURE__*/ defineChain({
+export const liskSepoliaChain = defineChain({
   id: 4202,
-  network: "lisk-sepolia",
   name: "Lisk Sepolia Testnet",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: {
-    default: {
-      http: ["https://rpc.sepolia-api.lisk.com"],
-    },
-    public: {
-      http: ["https://rpc.sepolia-api.lisk.com"],
-    },
+  rpc: "https://rpc.sepolia-api.lisk.com",
+  nativeCurrency: {
+    name: "Ether",
+    symbol: "ETH",
+    decimals: 18,
   },
-  blockExplorers: {
-    blockscout: {
+  blockExplorers: [
+    {
       name: "Blockscout",
       url: "https://sepolia-blockscout.lisk.com",
     },
-    default: {
-      name: "Blockscout",
-      url: "https://sepolia-blockscout.lisk.com",
-    },
-  },
+  ],
   testnet: true,
 });

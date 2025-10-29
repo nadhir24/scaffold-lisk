@@ -1,26 +1,20 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 export const TokenBalance = () => {
   const { address: connectedAddress } = useAccount();
 
-  const { data: tokenBalance } = useScaffoldContractRead({
+  const { data: balance } = useScaffoldContractRead({
     contractName: "MyToken",
     functionName: "balanceOf",
-    args: [connectedAddress],
+    args: [connectedAddress as `0x${string}`],
   });
 
-  const { data: tokenSymbol } = useScaffoldContractRead({
+  const { data: symbol } = useScaffoldContractRead({
     contractName: "MyToken",
     functionName: "symbol",
-  });
-
-  const { data: tokenName } = useScaffoldContractRead({
-    contractName: "MyToken",
-    functionName: "name",
   });
 
   if (!connectedAddress) {
@@ -28,7 +22,7 @@ export const TokenBalance = () => {
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title">Token Balance</h2>
-          <p>Please connect your wallet to view token balance</p>
+          <p>Please connect your wallet to view your balance</p>
         </div>
       </div>
     );
@@ -37,20 +31,11 @@ export const TokenBalance = () => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
-        <h2 className="card-title">
-          {tokenName} ({tokenSymbol})
-        </h2>
-        <div className="stats">
-          <div className="stat">
-            <div className="stat-title">Your Balance</div>
-            <div className="stat-value text-primary">
-              {tokenBalance ? (Number(tokenBalance) / 1e18).toFixed(4) : "0.0000"}
-            </div>
-            <div className="stat-desc">{tokenSymbol}</div>
+        <h2 className="card-title">Your Token Balance</h2>
+        <div className="stat">
+          <div className="stat-value text-primary">
+            {balance ? (Number(balance) / 1e18).toFixed(2) : "0"} {symbol || ""}
           </div>
-        </div>
-        <div className="card-actions justify-end">
-          <Address address={connectedAddress} />
         </div>
       </div>
     </div>

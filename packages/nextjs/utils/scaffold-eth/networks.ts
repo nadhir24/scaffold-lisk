@@ -1,5 +1,5 @@
 import * as chains from "viem/chains";
-import { liskSepolia } from "~~/chains";
+import { liskSepoliaChain } from "~~/chains";
 import scaffoldConfig from "~~/scaffold.config";
 
 type ChainAttributes = {
@@ -16,7 +16,7 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   [chains.hardhat.id]: {
     color: "#b8af0c",
   },
-  [liskSepolia.id]: {
+  [liskSepoliaChain.id]: {
     color: "#E84D31",
   },
   [chains.mainnet.id]: {
