@@ -42,7 +42,7 @@ export const AddressInfoDropdown = ({
     setSelectingNetwork(false);
     dropdownRef.current?.removeAttribute("open");
   };
-  useOutsideClick(dropdownRef, closeDropdown);
+  useOutsideClick(dropdownRef as unknown as React.RefObject<HTMLElement>, closeDropdown);
 
   return (
     <>
