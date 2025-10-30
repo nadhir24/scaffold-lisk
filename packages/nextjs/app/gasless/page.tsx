@@ -6,7 +6,7 @@ import { liskSepoliaChain } from "~~/chains";
 import { SmartWalletDemo } from "~~/components/example-ui/SmartWalletDemo";
 import { thirdwebClient } from "~~/services/web3/thirdwebConfig";
 
-// ✅ Use shared client
+export const dynamic = "force-dynamic";
 
 const Gasless: NextPage = () => {
   const account = useActiveAccount();
@@ -24,7 +24,7 @@ const Gasless: NextPage = () => {
             chain={liskSepoliaChain}
             accountAbstraction={{
               chain: liskSepoliaChain,
-              sponsorGas: true, // ✅ This enables gasless transactions!
+              sponsorGas: true,
             }}
           />
         </div>
