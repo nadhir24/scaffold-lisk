@@ -13,7 +13,7 @@ const Oracle: NextPage = () => {
         <div className="card w-96 bg-base-100 shadow-xl">
           <div className="card-body text-center">
             <h2 className="card-title justify-center">Oracle Price Feeds</h2>
-            <p>Please connect your wallet to view live prices.</p>
+            <p>Please connect your wallet to view live prices</p>
           </div>
         </div>
       </div>

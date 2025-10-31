@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { WrapperBuilder } from "@redstone-finance/evm-connector";
+import { getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { ethers } from "ethers";
+import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
 interface PriceDisplayProps {
   symbol: "ETH" | "BTC";
@@ -12,31 +16,59 @@ export const PriceDisplay = ({ symbol }: PriceDisplayProps) => {
   const [error, setError] = useState<string>("");
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
-  const fetchPrice = async () => {
+  const { data: priceFeedContract } = useDeployedContractInfo("PriceFeed");
+
+  const fetchPrice = useCallback(async () => {
+    if (!priceFeedContract) {
+      setError("PriceFeed contract not deployed");
+      setIsLoading(false);
+      return;
+    }
+
+    if (typeof window === "undefined" || !window.ethereum) {
+      setError("Please connect your wallet");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       setIsLoading(true);
       setError("");
 
-      // Mock price data
-      const mockPrice = symbol === "ETH" ? 3000 : 50000;
-      const formattedPrice = mockPrice.toFixed(2);
+      const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+      const contract = new ethers.Contract(priceFeedContract.address, priceFeedContract.abi, provider);
+
+      const signers = getSignersForDataServiceId("redstone-main-demo");
+
+      const wrappedContract = WrapperBuilder.wrap(contract).usingDataService({
+        dataPackagesIds: [symbol],
+        authorizedSigners: signers,
+      });
+
+      const priceData = symbol === "ETH" ? await wrappedContract.getEthPrice() : await wrappedContract.getBtcPrice();
+
+      const numericPrice = Number(priceData) / 1e8;
+
+      // Format angka ribuan dan dua desimal
+      const formattedPrice = new Intl.NumberFormat("id-ID", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(numericPrice);
 
       setPrice(formattedPrice);
       setLastUpdate(new Date());
-    } catch (error) {
-      console.error("Error fetching price:", error);
-      setError(error instanceof Error ? error.message : "Failed to fetch price");
-    } finally {
+      setIsLoading(false);
+    } catch (err: any) {
+      setError(`Failed to fetch ${symbol} price: ${err?.message || "Unknown error"}`);
       setIsLoading(false);
     }
-  };
+  }, [priceFeedContract, symbol]);
 
   useEffect(() => {
     fetchPrice();
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchPrice, 30000);
+    const interval = setInterval(fetchPrice, 30000); // Refresh every 30 seconds
     return () => clearInterval(interval);
-  }, [symbol]);
+  }, [fetchPrice]);
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
@@ -65,18 +97,25 @@ export const PriceDisplay = ({ symbol }: PriceDisplayProps) => {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <div className="stats">
+          <div className="stats shadow">
             <div className="stat">
               <div className="stat-title">Current Price</div>
-              <div className="stat-value text-white">${price}</div>
-              <div className="stat-desc">Updated: {lastUpdate.toLocaleTimeString()}</div>
+              <div className="stat-value text-primary">${price}</div>
+              <div className="stat-desc">Last updated: {lastUpdate.toLocaleTimeString()}</div>
             </div>
           </div>
         )}
 
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-end mt-4">
           <button className="btn btn-sm btn-outline" onClick={fetchPrice} disabled={isLoading}>
-            {isLoading ? "Refreshing..." : "Refresh"}
+            {isLoading ? (
+              <>
+                <span className="loading loading-spinner loading-xs"></span>
+                Refreshing...
+              </>
+            ) : (
+              "Refresh"
+            )}
           </button>
         </div>
       </div>
