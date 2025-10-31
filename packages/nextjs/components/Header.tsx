@@ -4,7 +4,16 @@ import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
-import { Bars3Icon, BellIcon, BugAntIcon, CurrencyDollarIcon, HomeIcon, SparklesIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowsRightLeftIcon,
+  Bars3Icon,
+  BellIcon,
+  BugAntIcon,
+  CurrencyDollarIcon,
+  HomeIcon,
+  ShoppingCartIcon,
+  SparklesIcon,
+} from "@heroicons/react/24/outline";
 import {
   DappConsoleButton,
   FaucetButton,
@@ -36,7 +45,7 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/marketplace",
     icon: <ShoppingCartIcon className="h-4 w-4" />,
   },
-    {
+  {
     label: "Oracle",
     href: "/oracle",
     icon: <CurrencyDollarIcon className="h-4 w-4" />,
@@ -50,6 +59,11 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Debug Contracts",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
+  },
+  {
+    label: "DEX",
+    href: "/dex",
+    icon: <ArrowsRightLeftIcon className="h-4 w-4" />,
   },
 ];
 
@@ -86,11 +100,10 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
- useOutsideClick(
-  burgerMenuRef as React.RefObject<HTMLElement>,
-  useCallback(() => setIsDrawerOpen(false), []),
-);
-
+  useOutsideClick(
+    burgerMenuRef as React.RefObject<HTMLElement>,
+    useCallback(() => setIsDrawerOpen(false), []),
+  );
 
   return (
     <header className="sticky lg:static top-0 navbar bg-base-900 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2 border-b border-[#252442]">
