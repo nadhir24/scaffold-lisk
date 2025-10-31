@@ -1004,7 +1004,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     PriceFeed: {
-      address: "0x71A347dcBaaf05f9A5Af58f85067B3c42A35ad53",
+      address: "0xeC7eBA7F6F37F9d3C518f29c8b8efB38657927e5",
       abi: [
         {
           inputs: [],
@@ -1078,6 +1078,17 @@ const deployedContracts = {
           type: "error",
         },
         {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "signedHash",
+              type: "bytes32",
+            },
+          ],
+          name: "InvalidSignature",
+          type: "error",
+        },
+        {
           inputs: [],
           name: "RedstonePayloadMustHaveAtLeastOneDataPackage",
           type: "error",
@@ -1091,38 +1102,6 @@ const deployedContracts = {
             },
           ],
           name: "SignerNotAuthorised",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "receivedTimestampSeconds",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "blockTimestamp",
-              type: "uint256",
-            },
-          ],
-          name: "TimestampFromTooLongFuture",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "receivedTimestampSeconds",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "blockTimestamp",
-              type: "uint256",
-            },
-          ],
-          name: "TimestampIsTooOld",
           type: "error",
         },
         {
@@ -1177,7 +1156,7 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "_signerAddress",
+              name: "signerAddress",
               type: "address",
             },
           ],
@@ -1233,11 +1212,16 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "getLatestPrice",
+          name: "getMultiplePrices",
           outputs: [
             {
               internalType: "uint256",
-              name: "",
+              name: "ethPrice",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "btcPrice",
               type: "uint256",
             },
           ],
@@ -1272,13 +1256,13 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {
-        aggregateValues: "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
+        aggregateValues: "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
         extractTimestampsAndAssertAllAreEqual:
-          "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
-        getAuthorisedSignerIndex: "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
-        getDataServiceId: "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
-        getUniqueSignersThreshold: "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
-        validateTimestamp: "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol",
+          "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
+        getAuthorisedSignerIndex: "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
+        getDataServiceId: "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
+        getUniqueSignersThreshold: "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
+        validateTimestamp: "@redstone-finance/evm-connector/contracts/data-services/MainDemoConsumerBase.sol",
       },
     },
     SimpleDEX: {

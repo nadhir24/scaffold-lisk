@@ -7,6 +7,7 @@ const deployPriceFeed: DeployFunction = async function (hre: HardhatRuntimeEnvir
 
   await deploy("PriceFeed", {
     from: deployer,
+    args: [],
     log: true,
     autoMine: true,
   });

@@ -53,9 +53,7 @@ export const NFTCard = ({ tokenId }: NFTCardProps) => {
   // Fetch ETH price from a public API (CoinGecko)
   const fetchEthPrice = useCallback(async () => {
     try {
-      const response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-      );
+      const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
       const data = await response.json();
       if (data?.ethereum?.usd) {
         setEthPriceUSD(data.ethereum.usd);
@@ -76,8 +74,7 @@ export const NFTCard = ({ tokenId }: NFTCardProps) => {
   useEffect(() => {
     if (marketplaceAddress) {
       setIsApproved(
-        approvedAddress?.toLowerCase() === (marketplaceAddress as string).toLowerCase() ||
-          isApprovedForAll === true,
+        approvedAddress?.toLowerCase() === (marketplaceAddress as string).toLowerCase() || isApprovedForAll === true,
       );
     }
   }, [approvedAddress, isApprovedForAll, marketplaceAddress]);
@@ -261,9 +258,7 @@ export const NFTCard = ({ tokenId }: NFTCardProps) => {
               />
               {listPrice && ethPriceUSD > 0 && (
                 <label className="label">
-                  <span className="label-text-alt">
-                    ~${(parseFloat(listPrice) * ethPriceUSD).toFixed(2)} USD
-                  </span>
+                  <span className="label-text-alt">~${(parseFloat(listPrice) * ethPriceUSD).toFixed(2)} USD</span>
                 </label>
               )}
             </div>
