@@ -41,6 +41,7 @@ export const PriceDisplay = ({ symbol }: PriceDisplayProps) => {
       const signers = getSignersForDataServiceId("redstone-main-demo");
 
       const wrappedContract = WrapperBuilder.wrap(contract).usingDataService({
+        dataServiceId: "redstone-main-demo",
         dataPackagesIds: [symbol],
         authorizedSigners: signers,
       });
